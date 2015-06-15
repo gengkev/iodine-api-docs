@@ -1,4 +1,5 @@
 # Eighth
+
 The Eighth API allows users to view and sign up for 8th period activities. It corresponds to the *eighth* module in Iodine.
 
 **All methods in this API require the user to be signed in to an Iodine account.**
@@ -6,14 +7,18 @@ The Eighth API allows users to view and sign up for 8th period activities. It co
 Most of the source code pertaining to authentication can be found in [eighth.mod.php5](https://github.com/tjcsl/iodine/blob/master/modules/eighth/eighth.mod.php5), as well as in the rest of the files in [that folder](https://github.com/tjcsl/iodine/tree/master/modules/eighth).
 
 
+
 ## Block
+
 The *Block* resource (XML) represents an 8th period block. This is a scheduled period during the school day during which users may sign up for 8th period activities to attend.
 
 There are often multiple 8th period blocks in the same day, and they are distinguished by a letter, described in the property `type`. In common parlance, a block with type `B` may be referred to as `B-Block` or `8B`.
 
 Activity signups for each block are closed every day at the end of lunch. At this point, the block is marked as `locked` and only the 8th period office may make further modifications.
 
+
 ### Properties
+
 - `bid` The block's ID
 - `date` The date when the block takes place
   - `str` Formatted as an ISO date (e.g. `2015-03-06`)
@@ -25,12 +30,16 @@ Activity signups for each block are closed every day at the end of lunch. At thi
 - `activity` An *Activity* resource representing the activity that the logged-in user has selected
 
 
+
 ## Activity
+
 The *Activity* resource (XML) represents an 8th period activity, which users may sign up for. *Activity* resources are generally tied to a certain block. However, activities also have properties that are the same across all instances, such as their name. Activities are usually scheduled weeks in advance for a certain block and day of the week (e.g. every Friday B-Block).
 
 Each *Activity* resource is associated with sponsors and rooms. The sponsors of an activity are the staff members responsible for students during that activity. The rooms are where an activity takes place, and must be reserved in advance. The rooms generally determine what capacity each activity has. These are represented by the attributes `block_sponsors` and `block_rooms`.
 
+
 ### Types of activities
+
 "Restricted" activities are not open to all students. Usually, students are placed into one by the 8th period office at the request of a staff member. In this case, if they select another activity, they may not switch back. Sometimes, certain students are allowed to freely sign up for a restricted activity, but not automatically signed up. In this case, the web interface will not display the activity as restricted. However, **the API does not do this**, which [may be a bug](https://github.com/gengkev/thyroxine/issues/8).
 
 "Sticky" activities are those that the 8th period office has placed you into and mandated that you attend. You may not switch to another activity. These include counselor meetings, school-wide activities, remediation, detention, or other special circumstances. Sticky activities are usually restricted, because otherwise you could accidentally sticky yourself into an activity. (There are a few exceptions, for example `40: Curriculum Fair - no 8th period activities (S)`, which can be verified with `get_activity`. The actual behavior is unclear: can you really sticky yourself into an activity?)
@@ -43,14 +52,18 @@ Each *Activity* resource is associated with sponsors and rooms. The sponsors of 
 
 "Special" activities are not regularly scheduled, and students may find them interesting. They are listed at the top of the web interface, so that they can be easily noticed.
 
+
 ### Properties
+
 Note that there are some differences between the properties of the *Activity* resources returned in the body of the `get_block` method, and those found elsewhere. These are due to different SQL queries being used when only one activity is queried, versus when multiple activities are queried. **In particular, `member_count` and `capacity` are only retrievable with `get_block`.**
 
 There are also defunct properties that differ in availability. For example, `roomchanged` is also only available with `get_block`. However, that property is no longer used; instead, the comment field is changed (see block 2895, with three examples). Another one of those properties is `block_rooms_comma`, which is simply the room names provided by the `block_rooms` tag joined with commas. In contrast, `rooms` and `sponsors` are *not* retrievable with `get_block`, but they have been superseded by `block_rooms` and `block_sponsors`.
 
 It's not clear what the `calendar` and `advertisement` properties are used for, if they are still used at all.
 
+
 #### Intrinsic to the activity
+
 These properties are tied to all instances of the activity; they are the same regardless of the block the activity is scheduled for. They depend on only the activity ID.
 
 - `aid` Activity ID
@@ -65,7 +78,9 @@ These properties are tied to all instances of the activity; they are the same re
   - `special` Whether this activity is a special activity
   - `calendar`
 
+
 #### Specific to each scheduled activity
+
 These properties are tied to instances of activities scheduled for a specific block. These properties depend on both an activity ID and a block ID.
 
 - `comment` Comment about what's happening in this activity during this block
@@ -89,17 +104,22 @@ These properties are tied to instances of activities scheduled for a specific bl
   - `attendancetaken` Whether this activity's attendance has been taken for this block
 
 
+
 ## GET /api/eighth/list_blocks{/uid}{?start_date,daysforward}
+
 Retrieves all *Block* resources corresponding to the provided dates. The selected activities listed correspond to the provided UID.
 
 As noted above, the *Activity* resources returned from this method will NOT include the `member_count` or `capacity` fields.
 
 The result is an XML representation of each *Block*, each of which is inside an `block` tag. All of them are children of the `blocks` tag, which is a child of the root `eighth` tag.
 
+
 #### Parameters
+
 - `uid` (default: current user) The Iodine UID or UID number of the user to obtain the selected activities of; this will fail if the logged-in user does not have permission to view that user's 8th period schedule
 - `start_date` (default: date of next block) The date to begin retrieving *Block* resources from
 - `daysforward` (default: `99999`) The number of days after the start date to retrieve *Block* resources
+
 
 #### Example Result
 
@@ -207,13 +227,18 @@ The result is an XML representation of each *Block*, each of which is inside an 
 ```
 
 
+
 ## GET /api/eighth/get_activity/{aid}
+
 Retrieves the *Activity* with the given AID.
 
 The result is an XML representation of the *Activity* inside of an `activity` tag. This tag is a child of the root `eighth` tag.
 
+
 #### Parameters
+
 - `aid` AID of the requested *Activity*
+
 
 #### Example Result
 

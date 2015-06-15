@@ -1,6 +1,10 @@
+# iodine-api-docs
+
 This is an attempt to document various API endpoints that Iodine provides, in the hope that it may be useful to other developers. Note that this documentation is unofficial; that is, not sanctioned by anyone. All paths are relative to https://iodine.tjhsst.edu/, or to the path to an Iodine installation.
 
 Creating this page was quite an adventure; alas, Iodine is soon to be replaced by its successor, [Ion](https://github.com/tjcsl/ion). Here's to hoping that Ion will have more complete and less hacky API coverage.
+
+
 
 # Table of Contents
 
@@ -9,12 +13,14 @@ Creating this page was quite an adventure; alas, Iodine is soon to be replaced b
   * [Login (POST /api/)](Authentication.md#login-post-api)
   * [Logout (GET /logout)](Authentication.md#logout-get-logout)
 
+
 * [Day Schedule](Day-Schedule.md)
   * [Block](Day-Schedule.md#block)
   * [Schedule](Day-Schedule.md#schedule)
   * [GET /ajax/dayschedule/json{?date}](Day-Schedule.md#get-ajaxdayschedulejsondate)
   * [GET /ajax/dayschedule/json_exp{?start,end}](Day-Schedule.md#get-ajaxdayschedulejson_expstartend)
   * GET /api/dayschedule{?date}
+
 
 * [Eighth](Eighth.md)
   * [Block](Eighth.md#block)
@@ -29,6 +35,7 @@ Creating this page was quite an adventure; alas, Iodine is soon to be replaced b
   * GET /api/eighth/absences{/uid}{?start_date}
   * GET /eighth/vcp_schedule/favorite/uid/{aid}/bids/{bid}
 
+
 * [News](News.md)
   * [Post](News.md#post)
   * [GET /api/news/show/{id}](News.md#get-apinewsshowid)
@@ -39,6 +46,7 @@ Creating this page was quite an adventure; alas, Iodine is soon to be replaced b
   * GET /cliodine/news/old
   * GET /cliodine/news/archived
   * [GET /feeds/rss](News.md#get-feedsrss)
+
 
 * [Student Directory](Student-Directory.md)
   * [Info](Student-Directory.md#info)
