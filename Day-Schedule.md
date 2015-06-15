@@ -57,7 +57,7 @@ The result is a JSON object representation of the *Schedule* resource.
 
 Note that only the first two blocks are listed here.
 
-```json
+```js
 {
     "dayname": "Tuesday, February 3",
     "summary": "Modified Blue Day with AMC",
@@ -111,7 +111,7 @@ The result is a JSON map of each day to its corresponding *Schedule* resource, w
 
 Note that only the first two blocks of each day are listed here.
 
-```json
+```js
 {
     "20150203": {
         "dayname": "Tuesday, February 3",

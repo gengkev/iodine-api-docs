@@ -72,7 +72,7 @@ Example (XML):
 
 Example (JSON):
 
-```json
+```js
 // Single email address
 "mail": "one@example.com"
 
@@ -138,7 +138,7 @@ Example (XML):
 
 Example (JSON):
 
-```json
+```js
 "enrolledclass": [
     "tjhsstSectionId=740500-01,ou=schedule,dc=tjhsst,dc=edu",
     "tjhsstSectionId=001562-10,ou=schedule,dc=tjhsst,dc=edu",
@@ -202,7 +202,7 @@ The result is a JSON representation of the *Info* resource. The XML tags that wo
 
 #### Example Result
 
-```json
+```js
 {
     "objectclass": "tjhsstStudent",
     "iodineuid": "awilliam",
