@@ -42,6 +42,7 @@ Creating this page was quite an adventure; alas, Iodine is soon to be replaced b
 
 * [Student Directory](Student-Directory.md)
   * [Info](Student-Directory.md#info)
+  * [GET /ajax/studentdirectory/info{/uid}](Student-Directory.md#get-ajaxstudentdirectoryinfouid)
   * [GET /api/studentdirectory/info{/uid}](Student-Directory.md#get-apistudentdirectoryinfouid)
   * [GET /api/studentdirectory/classes{/uid}](Student-Directory.md#get-apistudentdirectoryclassesuid)
   * [GET /api/studentdirectory/class/{sid}](Student-Directory.md#get-apistudentdirectoryclasssid)

@@ -44,17 +44,29 @@ Note that `tjhsstStudentId` denotes the user's FCPS ID, also known as the studen
 
 For the following properties, it is possible to specify multiple values for each field. Normally, each tag contains text. With multiple values, each tag will contain child nodes, which will have tag names equivalent to the regular tag name without the last character. (This was probably intended to strip off an "s".)
 
-Example:
-```xml
-<!-- Single email address -->
-<mail>example@example.com</mail>
+Example (XML):
 
-<!-- Multiple email addresses -->
-<mail>
-  <mai>one@example.com</mai>
-  <mai>two@example.com</mai>
-</mail>
-```
+    <!-- Single email address -->
+    <mail>example@example.com</mail>
+
+    <!-- Multiple email addresses -->
+    <mail>
+      <mai>one@example.com</mai>
+      <mai>two@example.com</mai>
+    </mail>
+
+
+Example (JSON):
+
+    // Single email address
+    "mail": "one@example.com"
+
+    // Multiple email addresses
+    "mail": [
+        "one@example.com",
+        "two@example.com"
+    ]
+
 
 - `telephonenumber` Other phone number
 - `mail` Email address
@@ -92,14 +104,22 @@ Each of these is either `TRUE` or `FALSE`, if present.
 #### Classes
 All classes are inside the `enrolledclass` tag, which contains more `enrolledclass` tags, which contain comma-separated name/value pairs (presumably some sort of an LDAP reference). The only important one is `tjhsstSectionId`.
 
-Example:
-```xml
-<enrolledclass>
-  <enrolledclass>tjhsstSectionId=740500-01,ou=schedule,dc=tjhsst,dc=edu</enrolledclass>
-  <enrolledclass>tjhsstSectionId=001562-10,ou=schedule,dc=tjhsst,dc=edu</enrolledclass>
-  <!-- and so on -->
-</enrolledclass>
-```
+Example (XML):
+
+    <enrolledclass>
+      <enrolledclass>tjhsstSectionId=740500-01,ou=schedule,dc=tjhsst,dc=edu</enrolledclass>
+      <enrolledclass>tjhsstSectionId=001562-10,ou=schedule,dc=tjhsst,dc=edu</enrolledclass>
+      <!-- and so on -->
+    </enrolledclass>
+
+Example (JSON):
+
+    "enrolledclass": [
+        "tjhsstSectionId=740500-01,ou=schedule,dc=tjhsst,dc=edu",
+        "tjhsstSectionId=001562-10,ou=schedule,dc=tjhsst,dc=edu",
+        // ...and so on
+    ]
+
 
 - `tjhsstSectionId` Section ID of a *Section* resource
 
@@ -131,6 +151,45 @@ Note that there are some differences between the properties of the *Section* res
 - `numstudents` Number of items in `students`, not total number of students enrolled *(not always available)*
 - `students` The students enrolled in this class who have their schedule visible *(not always available)*
   - `student` An *Info* resource representing each student
+
+
+## GET /ajax/studentdirectory/info{/uid}
+Returns the *Info* resource corresponding to a specific user.
+
+The result is a JSON representation of the *Info* resource. The XML tags that would be in the `info` tag are instead properties of the root JSON object.
+
+#### Parameters
+- `uid` (default: current user) The Iodine UID or UID number of the user to retrieve (ex. `awilliam`, `8889`)
+
+#### Example Result
+
+    {
+        "objectclass": "tjhsstStudent",
+        "iodineuid": "awilliam",
+        "iodineuidnumber": "8889",
+        "cn": "Angela William",
+        "sn": "William",
+        "header": "TRUE",
+        "givenname": "Angela",
+        "graduationyear": "2017",
+        "mail": "ahamilto@tjhsst.edu",
+        "style": "i3-light",
+        "boxcolor": "0063ff",
+        "mailentries": "-1",
+        "perm-showaddress-self": "FALSE",
+        "perm-showtelephone-self": "FALSE",
+        "perm-showbirthday-self": "FALSE",
+        "perm-showschedule-self": "FALSE",
+        "perm-showeighth-self": "FALSE",
+        "perm-showmap-self": "FALSE",
+        "perm-showpictures-self": "FALSE",
+        "perm-showlocker-self": "FALSE",
+        "startpage": "news",
+        "chrome": "TRUE",
+        "eighthagreement": "TRUE",
+        "allset": true,
+        "__nulls": []
+    }
 
 
 ## GET /api/studentdirectory/info{/uid}
